@@ -13,6 +13,10 @@
         <div class="tarjeta"><small>Ventas (sin cancelados)</small><strong>${{ number_format($ventas, 2) }}</strong></div>
     </div>
 
+    <div class="barra">
+        <a class="btn" href="{{ route('admin.reporte') }}">Ver reporte de ventas</a>
+    </div>
+
     <h2>Últimos pedidos</h2>
     <div class="tabla">
         <table>

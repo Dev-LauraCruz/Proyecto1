@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Pedido;
 use App\Models\Producto;
-use Illuminate\Http\Request;
 
 class PanelController extends Controller
 {
@@ -21,16 +20,5 @@ class PanelController extends Controller
                 ->limit(5)
                 ->get(),
         ]);
-    }
-
-    public function cliente(Request $request)
-    {
-        $pedidos = $request->user()
-            ->pedidos()
-            ->withCount('detalles')
-            ->orderByDesc('fecha_pedido')
-            ->get();
-
-        return view('cliente.inicio', compact('pedidos'));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Cliente extends Model
+class Cliente extends Authenticatable
 {
     protected $table = 'cliente';
     protected $primaryKey = 'id_cliente';
@@ -17,9 +17,43 @@ class Cliente extends Model
         'correo',
         'telefono',
         'contrasena',
+        'rol',
     ];
 
     protected $hidden = ['contrasena'];
+
+    // --- Adaptación del login a las columnas de tu tabla ---
+
+    // La contraseña está en la columna "contrasena" (no "password")
+    public function getAuthPassword()
+    {
+        return $this->contrasena;
+    }
+
+    public function getAuthPasswordName()
+    {
+        return 'contrasena';
+    }
+
+    // La tabla no tiene columna remember_token
+    public function getRememberTokenName()
+    {
+        return '';
+    }
+
+    // --- Utilidades ---
+
+    public function esAdmin(): bool
+    {
+        return $this->rol === 'admin';
+    }
+
+    public function nombreCompleto(): string
+    {
+        return trim("{$this->nombre} {$this->apellido_p} {$this->apellido_m}");
+    }
+
+    // --- Relaciones ---
 
     public function direcciones()
     {
